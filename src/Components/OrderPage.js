@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as yup from "yup";
 import schema from "../Validation/ForSchema";
+import axios from "axios";
 
 const initialValues = {
   username: "",
@@ -44,7 +45,9 @@ const OrderForm = (props) => {
   };
 
   const handleSubmit = () => {
-    console.log(formValues);
+    axios
+      .post("https://reqres.in/api/orders", formValues)
+      .catch((err) => console.error(err));
   };
 
   const validate = (name, value) => {
@@ -60,7 +63,7 @@ const OrderForm = (props) => {
       <p>{errors.username}</p>
       <p>{errors.size}</p>
       <p>{errors.special}</p>
-      <form onSubmit={onSubmit}>
+      <form id="pizza-form" onSubmit={onSubmit}>
         <label>
           Name:
           <input
